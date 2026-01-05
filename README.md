@@ -20,7 +20,7 @@ PocketBuddy is a personal finance management system that helps users track their
 2. Open **phpMyAdmin** and import the database file `pocketbuddy.sql`.
 3. Start **XAMPP Apache** and **MySQL** services.
 4. Open your browser and navigate to:  
-[text](http://localhost/pocketbuddy/index.php)
+(http://localhost/pocketbuddy/index.php)
 
 5. Login or register a new account to start using the application.
 
@@ -28,7 +28,7 @@ PocketBuddy is a personal finance management system that helps users track their
 
 ## Team Members
 - Sakiba Nusrat  
-- [Member 2 Name]  
+- [Irteza Yesmin]  
 - [Member 3 Name]  
 
 ---
