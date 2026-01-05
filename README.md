@@ -28,8 +28,8 @@ PocketBuddy is a personal finance management system that helps users track their
 
 ## Team Members
 - Sakiba Nusrat  
-- [Irteza Yesmin]  
-- [Member 3 Name]  
+- Irtaza Yesmin
+- Mahide Hasan Munna   
 
 ---
 
