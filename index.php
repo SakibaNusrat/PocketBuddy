@@ -35,159 +35,526 @@ if (isset($_SESSION['email'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Sidebar</title>
+    <title>PocketBuddy | Dashboard</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Custom CSS -->
     <style>
-        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap");
+
+        :root {
+            --rust: #A6432C;
+            --terracotta: #C15A3E;
+            --terracotta-light: #D97A55;
+            --cream: #FBF6F3;
+            --paper: #FDF3EF;
+            --line: #ECE0DB;
+            --ink: #2B2320;
+            --ink-soft: #7A6E68;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background:rgb(241, 239, 239);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 15px;
         }
 
-        p {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.1em;
-            font-weight: 300;
-            line-height: 1.7em;
-            color: #999;
+        h1, h2, h3, .brand-mark {
+            font-family: 'Fraunces', serif;
         }
-        
-
-
-        .logo img {
-         width: 150px; /* Adjust the width of the logo */
-         height: 150px; /* Ensures a consistent shape */
-          border-radius: 50%; /* Makes the frame circular */
-         border: 5px solid rgb(24, 24, 24); /* Adds a border to the frame */
-         object-fit: cover; /* Ensures the image fits within the oval */
-         }
 
         a,
         a:hover,
         a:focus {
             color: inherit;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .navbar {
-            padding: 15px 10px;
-            background: #fff;
-            border: none;
-            border-radius: 10px 10px 10px 10px;
-            margin-bottom: 40px;
-            box-shadow: 1px 1px 3px #641e16;
-        }
-
-        .navbar-btn {
-            box-shadow: none;
-            outline: none !important;
-            border: none;
-        }
-
-        .line {
-            width: 100%;
-            height: 1px;
-            border-bottom: 1px dashed #ddd;
-            margin: 40px 0;
-        }
-
-        /* Sidebar Style */
+        /* ===== Layout ===== */
         .wrapper {
             display: flex;
             width: 100%;
             align-items: stretch;
+            min-height: 100vh;
         }
 
+        /* ===== Sidebar ===== */
         #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            background: #641e16;
-            color: #fff;
-            transition: all 0.3s;
+            min-width: 260px;
+            max-width: 260px;
+            background: #201512;
+            color: #E7DDD8;
+            transition: margin-left 0.3s;
         }
 
         #sidebar.active {
-            margin-left: -250px;
+            margin-left: -260px;
         }
 
         #sidebar .sidebar-header {
-            padding: 20px;
-            background: #641e16;
+            padding: 28px 24px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #sidebar .sidebar-header .mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(160deg, var(--terracotta-light), var(--rust));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #sidebar .sidebar-header h3 {
+            font-size: 17px;
+            margin: 0;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        #sidebar .section-label {
+            display: block;
+            padding: 22px 24px 8px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: #9C8D86;
         }
 
         #sidebar ul.components {
-            padding: 20px 0;
-            border-bottom: 1px solid #641e16;
-        }
-
-        #sidebar ul p {
-            color: #fff;
-            padding: 10px;
+            padding: 4px 12px 20px;
+            margin: 0;
+            list-style: none;
         }
 
         #sidebar ul li a {
-            padding: 10px;
-            font-size: 1.1em;
-            display: block;
+            padding: 10px 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 8px;
+            color: #D7CAC4;
+        }
+
+        #sidebar ul li a i {
+            width: 16px;
+            text-align: center;
+            color: #B79C8F;
         }
 
         #sidebar ul li a:hover {
-            color: #641e16;
-            background: #fff;
+            background: rgba(255,255,255,0.06);
+            color: #fff;
         }
 
-        #sidebar ul li.active>a,
-        a[aria-expanded="true"] {
+        #sidebar ul li.active > a {
+            background: var(--terracotta);
             color: #fff;
-            background: #edbb99;
+        }
+
+        #sidebar ul li.active > a i {
+            color: #fff;
+        }
+
+        ul ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 4px 0 8px;
         }
 
         ul ul a {
-            font-size: 0.9em !important;
-            padding-left: 30px !important;
-            background: #641e16;
+            font-size: 13px !important;
+            padding-left: 42px !important;
+            color: #C7B8B1;
         }
 
-        ul.CTAs {
-            padding: 20px;
-        }
-
-        ul.CTAs a {
-            text-align: center;
-            font-size: 0.9em !important;
-            display: block;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
-
-        a.download {
-            background: #fff;
-            color: #f5cba7;
-        }
-
-        /* Content Style */
+        /* ===== Content ===== */
         #content {
             width: 100%;
-            padding: 20px;
+            padding: 28px 34px 40px;
             min-height: 100vh;
-            transition: all 0.3s;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .topbar .btn-toggle {
+            border: 1px solid var(--line);
+            background: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            color: var(--rust);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 360px;
+            margin-left: 18px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-soft);
+            font-size: 13px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: 8px;
+            padding: 9px 14px 9px 36px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--terracotta);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon-btn {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-soft);
+            font-size: 14px;
+        }
+
+        .icon-btn .dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--terracotta);
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px 6px 6px;
+            border-radius: 30px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .user-chip .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(160deg, var(--terracotta-light), var(--rust));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .user-chip .username {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 12px 28px rgba(43, 35, 32, 0.1);
+            font-size: 13px;
+        }
+
+        .dropdown-item i {
+            color: var(--terracotta);
+            width: 16px;
+            margin-right: 4px;
+        }
+
+        .dropdown-item:active,
+        .dropdown-item:hover {
+            background: var(--cream);
+        }
+
+        /* ===== Welcome banner ===== */
+        .welcome-banner {
+            background: linear-gradient(150deg, var(--terracotta) 0%, var(--rust) 100%);
+            border-radius: 16px;
+            padding: 34px 36px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::after {
+            content: "";
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .welcome-banner h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .welcome-banner p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            margin: 0;
+            max-width: 420px;
+        }
+
+        .welcome-banner .btn-add {
+            background: #fff;
+            color: var(--rust);
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner .btn-add:hover {
+            background: var(--cream);
+        }
+
+        /* ===== Stat cards ===== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 20px 22px;
+        }
+
+        .stat-card .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .stat-card .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--rust);
+            background: var(--cream);
+        }
+
+        .stat-card .stat-label {
+            font-size: 12.5px;
+            color: var(--ink-soft);
+        }
+
+        .stat-card .stat-value {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-card .stat-delta {
+            font-size: 12px;
+            color: #3F8F5C;
+        }
+
+        .stat-card .stat-delta.down {
+            color: var(--terracotta);
+        }
+
+        /* ===== Panels ===== */
+        .panel-row {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .panel-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .panel-header a {
+            font-size: 12.5px;
+            color: var(--terracotta);
+            font-weight: 500;
+        }
+
+        .placeholder-chart {
+            height: 200px;
+            border-radius: 10px;
+            background: repeating-linear-gradient(
+                135deg,
+                var(--cream),
+                var(--cream) 10px,
+                #fff 10px,
+                #fff 20px
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-soft);
+            font-size: 13px;
+            border: 1px dashed var(--line);
+        }
+
+        .tx-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tx-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tx-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tx-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tx-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: var(--cream);
+            color: var(--rust);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .tx-name {
+            font-size: 13.5px;
+            font-weight: 500;
+        }
+
+        .tx-date {
+            font-size: 11.5px;
+            color: var(--ink-soft);
+        }
+
+        .tx-amount {
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        .tx-amount.neg {
+            color: var(--terracotta);
+        }
+
+        .tx-amount.pos {
+            color: #3F8F5C;
+        }
+
+        @media (max-width: 992px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .panel-row {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
             #sidebar {
-                margin-left: -250px;
+                margin-left: -260px;
             }
-
             #sidebar.active {
                 margin-left: 0;
             }
-
-            #sidebarCollapse span {
+            #content {
+                padding: 20px;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-box {
                 display: none;
             }
         }
@@ -197,48 +564,58 @@ if (isset($_SESSION['email'])) {
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Dashboard</h3>
+                <div class="mark">PB</div>
+                <h3>PocketBuddy</h3>
             </div>
+
+            <span class="section-label">Overview</span>
             <ul class="list-unstyled components">
-                <p>Simplifying Budgeting and Expense Management</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Feature</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="budget.php">Budget</a></li>
-                        <li><a href="goal.php">Goal</a></li>
-                        <li><a href="expense.php">Expense</a></li>
-                        <li><a href="donation.php">Donation</a></li>
-                        <li><a href="subscription.php">Subscription</a></li>
-                        <li><a href="bills.php">Bills</a></li>
-                        <li><a href="savingChallenge.php">Saving Challenge</a></li>
-                    </ul>
-                </li>
-                
-                <li>
-                    
-                </li>
-                <li><a href="budgetchart.php">budgetchart</a></li>
-                <li><a href="goalchart.php">Goalchart</a></li>
-                <li><a href="child_sub_account.php">child Sub Accout</a></li>
-                <li><a href="bankaccountadd.php">Bank Account</a></li>
-                <li><a href="#">About</a></li>
+                <li class="active"><a href="index.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="budgetchart.php"><i class="fas fa-chart-pie"></i> Budget Chart</a></li>
+                <li><a href="goalchart.php"><i class="fas fa-bullseye"></i> Goal Chart</a></li>
+            </ul>
+
+            <span class="section-label">Manage</span>
+            <ul class="list-unstyled components">
+                <li><a href="budget.php"><i class="fas fa-wallet"></i> Budget</a></li>
+                <li><a href="goal.php"><i class="fas fa-flag"></i> Goal</a></li>
+                <li><a href="expense.php"><i class="fas fa-receipt"></i> Expense</a></li>
+                <li><a href="donation.php"><i class="fas fa-hand-holding-heart"></i> Donation</a></li>
+                <li><a href="subscription.php"><i class="fas fa-sync-alt"></i> Subscription</a></li>
+                <li><a href="bills.php"><i class="fas fa-file-invoice-dollar"></i> Bills</a></li>
+                <li><a href="savingChallenge.php"><i class="fas fa-trophy"></i> Saving Challenge</a></li>
+            </ul>
+
+            <span class="section-label">Accounts</span>
+            <ul class="list-unstyled components">
+                <li><a href="child_sub_account.php"><i class="fas fa-users"></i> Child Sub Account</a></li>
+                <li><a href="bankaccountadd.php"><i class="fas fa-university"></i> Bank Account</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
             </ul>
         </nav>
 
-       <!-- Page Content -->
-<div id="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <button type="button" id="sidebarCollapse" class="btn btn-info">
-                <i class="fas fa-align-left"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <!-- Page Content -->
+        <div id="content">
+
+            <div class="topbar">
+                <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                    <i class="fas fa-align-left"></i>
+                </button>
+
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search transactions, goals, bills...">
+                </div>
+
+                <div class="topbar-right">
+                    <a class="icon-btn" href="#"><i class="fas fa-bell"></i><span class="dot"></span></a>
+                    <a class="icon-btn" href="message.php"><i class="fas fa-envelope"></i></a>
+
+                    <div class="dropdown">
+                        <a class="user-chip dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="avatar"><?php echo strtoupper(substr($first_Name, 0, 1)); ?></span>
                             <span class="username"><?php echo htmlspecialchars($first_Name); ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -246,70 +623,117 @@ if (isset($_SESSION['email'])) {
                             <a class="dropdown-item" href="settings.php"><i class="fas fa-cog"></i> Settings</a>
                             <a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-bell"></i> <span class="badge badge-danger"></span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="message.php"><i class="fas fa-envelope"></i> <span class="badge badge-primary">2</span></a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section with Image Slider -->
-    <div class="hero-section" style="position: relative; text-align: center; color: white; overflow: hidden;">
-        <img src="hero-image.jpg" alt="Hero Image" class="slide" style="width: 100%; height: auto; transition: transform 0.5s ease-in-out;">
-        <img src="hero-image1.jpg" alt="Hero Image" class="slide" style="width: 100%; height: auto; transition: transform 0.5s ease-in-out;">
-        <img src="hero-image2.jpg" alt="Hero Image" class="slide" style="width: 100%; height: auto; transition: transform 0.5s ease-in-out;">
-        <img src="hero-image3.jpg" alt="Second Hero Image" class="slide" style="width: 100%; height: auto; transition: transform 0.5s ease-in-out; display: none;">
-        <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
-            
-            <h1 style="font-size: 3rem;font-weight: bold;">Welcome To our page </h1>
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div>
+                    <h1>Welcome back, <?php echo htmlspecialchars($first_Name); ?></h1>
+                    <p>Here's a snapshot of your budgets, goals, and upcoming bills for this month.</p>
+                </div>
+                <button class="btn btn-add"><i class="fas fa-plus mr-2"></i>Add Expense</button>
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Balance</span>
+                        <span class="stat-icon"><i class="fas fa-wallet"></i></span>
+                    </div>
+                    <div class="stat-value">$4,280.50</div>
+                    <span class="stat-delta"><i class="fas fa-arrow-up"></i> 3.2% this month</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Monthly Budget</span>
+                        <span class="stat-icon"><i class="fas fa-chart-pie"></i></span>
+                    </div>
+                    <div class="stat-value">$1,850.00</div>
+                    <span class="stat-delta down"><i class="fas fa-arrow-down"></i> 62% used</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Savings Goal</span>
+                        <span class="stat-icon"><i class="fas fa-bullseye"></i></span>
+                    </div>
+                    <div class="stat-value">$920.00</div>
+                    <span class="stat-delta"><i class="fas fa-arrow-up"></i> 46% of $2,000</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Upcoming Bills</span>
+                        <span class="stat-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                    </div>
+                    <div class="stat-value">$340.00</div>
+                    <span class="stat-delta down"><i class="fas fa-clock"></i> Due in 5 days</span>
+                </div>
+            </div>
+
+            <!-- Panels -->
+            <div class="panel-row">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Spending Overview</h2>
+                        <a href="budgetchart.php">View report</a>
+                    </div>
+                    <div class="placeholder-chart">Spending chart will appear here</div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Recent Transactions</h2>
+                        <a href="expense.php">View all</a>
+                    </div>
+                    <ul class="tx-list">
+                        <li>
+                            <div class="tx-left">
+                                <span class="tx-icon"><i class="fas fa-utensils"></i></span>
+                                <div>
+                                    <div class="tx-name">Grocery Store</div>
+                                    <div class="tx-date">Today, 10:24 AM</div>
+                                </div>
+                            </div>
+                            <span class="tx-amount neg">-$64.20</span>
+                        </li>
+                        <li>
+                            <div class="tx-left">
+                                <span class="tx-icon"><i class="fas fa-briefcase"></i></span>
+                                <div>
+                                    <div class="tx-name">Salary Deposit</div>
+                                    <div class="tx-date">Yesterday, 9:00 AM</div>
+                                </div>
+                            </div>
+                            <span class="tx-amount pos">+$2,400.00</span>
+                        </li>
+                        <li>
+                            <div class="tx-left">
+                                <span class="tx-icon"><i class="fas fa-bolt"></i></span>
+                                <div>
+                                    <div class="tx-name">Electricity Bill</div>
+                                    <div class="tx-date">Sep 1, 6:12 PM</div>
+                                </div>
+                            </div>
+                            <span class="tx-amount neg">-$88.40</span>
+                        </li>
+                        <li>
+                            <div class="tx-left">
+                                <span class="tx-icon"><i class="fas fa-hand-holding-heart"></i></span>
+                                <div>
+                                    <div class="tx-name">Charity Donation</div>
+                                    <div class="tx-date">Aug 29, 2:45 PM</div>
+                                </div>
+                            </div>
+                            <span class="tx-amount neg">-$25.00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <!-- Content Section -->
-    <div class="container mt-5">
-        
-        <p> </p>
-    </div>
-</div>
-
-<script>
-    // Hero Image Slider (Auto-Switch Images)
-    let currentIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-
-    function showSlide() {
-        slides.forEach((slide, index) => {
-            slide.style.display = "none"; // Hide all slides
-        });
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].style.display = "block"; // Show the next slide
-    }
-
-    // Show the first slide initially
-    showSlide();
-
-    // Change images every 5 seconds
-    setInterval(showSlide, 5000);
-
-    // Add a subtle zoom effect on the hero images on hover
-    const heroImages = document.querySelectorAll('.hero-section img');
-
-    heroImages.forEach(heroImage => {
-        heroImage.addEventListener('mouseover', () => {
-            heroImage.style.transform = 'scale(1.05)';
-        });
-
-        heroImage.addEventListener('mouseout', () => {
-            heroImage.style.transform = 'scale(1)';
-        });
-    });
-</script>
-
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
