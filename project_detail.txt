@@ -1,0 +1,728 @@
+💰 PocketBuddy — Complete Project Plan
+Main idea
+
+PocketBuddy = Personal Finance Management System
+
+Main goal holo user-ke tar income, expense, budget, savings, bills, subscriptions, donations, goals etc. ek jaygay manage korte dewa.
+
+Simple language-e:
+
+User taka earn korbe → income record korbe → expense track korbe → budget set korbe → savings goal maintain korbe → bills/subscriptions-er reminder pabe → dashboard-e financial condition dekhbe.
+
+1. 🎯 Main Problem
+
+Normally ekjon user:
+
+koto income korche jane
+kintu kothay koto khoroch hocche seta accurately track kore na
+monthly budget maintain kore na
+bill-er due date bhule jay
+subscription-er taka automatically kete gele notice kore na
+savings goal maintain korte pare na
+unnecessary spending identify korte pare na
+PocketBuddy solution
+
+System user-er financial information collect kore organized dashboard-e show korbe.
+
+Example:
+
+Monthly Income       = ৳50,000
+Total Expense        = ৳32,000
+Remaining Balance    = ৳18,000
+
+Food                 = ৳10,000
+Transport            = ৳5,000
+Shopping             = ৳7,000
+Bills                = ৳6,000
+Others               = ৳4,000
+
+Tarpor system user-ke budget, savings, bills etc. manage korte help korbe.
+
+2. 🧩 Main Modules
+
+Tomader PocketBuddy-te major modules:
+
+                POCKETBUDDY
+                     │
+       ┌─────────────┼─────────────┐
+       │             │             │
+   Account       Financial       Planning
+   Management    Management       Management
+       │             │             │
+   Register       Income         Budget
+   Login          Expense        Goals
+   Profile        Categories     Savings
+                             
+       ┌─────────────┼─────────────┐
+       │             │             │
+    Reminder      Tracking       Extra
+       │             │             │
+     Bills      Subscription    Donation
+     Due Date       Tracker      Tracker
+                                  │
+                              Child Account
+3. 👤 Account Management
+Register
+
+User account create করবে:
+
+Name
+Email
+Phone
+Password
+
+Database-e user information save হবে.
+
+Login
+
+User:
+
+Email + Password
+
+দিয়ে login করবে।
+
+Backend database থেকে check করবে:
+
+Does this email exist?
+        ↓
+Does password match?
+        ↓
+YES → Dashboard
+NO  → Error
+
+Login-er pore session maintain korar jonno PHP session use kora jay.
+
+4. 🏠 Dashboard — Main Brain of UI
+
+Login করার পর user dashboard দেখবে।
+
+Dashboard-e important financial summary:
+
+-----------------------------------
+        Welcome, User
+-----------------------------------
+
+Income        Expense       Balance
+৳50,000       ৳32,000       ৳18,000
+
+-----------------------------------
+Expense Overview
+-----------------------------------
+
+Food          █████████
+Transport     ████
+Shopping      ██████
+Bills         █████
+
+-----------------------------------
+Budget Status
+-----------------------------------
+
+Food       ৳8,000 / ৳10,000
+Shopping   ৳6,000 / ৳5,000  ⚠️
+
+-----------------------------------
+Upcoming Bills
+-----------------------------------
+
+Internet     Sep 05
+Electricity  Sep 10
+Netflix      Sep 15
+Background logic
+
+Dashboard nijer theke data create korbe na.
+
+Database থেকে data এনে calculation করবে।
+
+For example:
+
+Total Income
+= SUM(all income)
+
+Total Expense
+= SUM(all expenses)
+
+Balance
+= Total Income - Total Expense
+5. 💵 Income Management
+
+User income add করবে।
+
+Example:
+
+Amount: ৳40,000
+Source: Salary
+Date: 01 September
+
+Database:
+
+income
+----------------
+income_id
+user_id
+amount
+source
+date
+description
+Logic
+
+User income add করলেই:
+
+income table
+      ↓
+save transaction
+      ↓
+dashboard
+      ↓
+recalculate total income
+6. 💸 Expense Management
+
+এটা PocketBuddy-r সবচেয়ে important অংশ।
+
+User expense add করবে:
+
+Amount: ৳500
+Category: Food
+Date: 03 September
+Description: Lunch
+
+Database-e save হবে।
+
+Expense categories
+
+যেমন:
+
+Food
+Transport
+Shopping
+Education
+Health
+Bills
+Entertainment
+Others
+Background logic
+
+Suppose:
+
+Income = 50,000
+
+Expenses:
+Food       = 10,000
+Transport  = 5,000
+Shopping   = 7,000
+Bills      = 6,000
+Others     = 4,000
+
+System calculate করবে:
+
+Total Expense = 32,000
+
+Remaining Balance
+= 50,000 - 32,000
+= 18,000
+7. 📊 Expense Analysis
+
+Expense শুধু store করলেই হবে না।
+
+System user-ke বুঝাবে:
+
+"Where is your money going?"
+
+Chart.js use করে:
+
+Pie chart
+Food        31%
+Shopping    22%
+Transport   16%
+Bills       19%
+Others      12%
+Monthly chart
+Jan   ৳20k
+Feb   ৳25k
+Mar   ৳28k
+Apr   ৳24k
+May   ৳32k
+
+এতে user spending pattern বুঝতে পারবে।
+
+8. 🎯 Budget Planner
+
+User category-wise budget set করবে।
+
+Example:
+
+Food       = ৳8,000
+Transport  = ৳5,000
+Shopping   = ৳4,000
+Bills      = ৳6,000
+
+তারপর system actual expense-এর সাথে compare করবে।
+
+Background logic
+
+ধরি:
+
+Food Budget = ৳8,000
+
+Actual Food Expense = ৳6,500
+
+তাহলে:
+
+Remaining = 8,000 - 6,500
+          = 1,500
+
+কিন্তু:
+
+Budget = ৳5,000
+Expense = ৳6,000
+
+তাহলে:
+
+Over Budget = ৳1,000
+
+System warning দেখাতে পারে:
+
+⚠️ You have exceeded your shopping budget.
+
+9. 🎯 Goal Setting
+
+User financial goal create করতে পারবে।
+
+Example:
+
+Goal: Buy a Laptop
+
+Target Amount = ৳80,000
+Saved         = ৳30,000
+Remaining     = ৳50,000
+
+System progress calculate করবে:
+
+Progress
+= Saved / Target × 100
+
+= 30,000 / 80,000 × 100
+= 37.5%
+
+UI:
+
+Laptop Goal
+
+████████░░░░░░░░ 37.5%
+
+Saved: ৳30,000
+Target: ৳80,000
+10. 💰 Savings Challenge
+
+এটা PocketBuddy-r interesting feature.
+
+User challenge create করতে পারবে।
+
+Example:
+
+30-Day Savings Challenge
+Day 1  → ৳50
+Day 2  → ৳100
+Day 3  → ৳150
+...
+
+System track করবে:
+
+Target Savings
+Current Savings
+Remaining
+Progress
+
+এতে saving habit তৈরি করতে help করবে।
+
+11. 🔔 Bill Reminder
+
+User bill add করবে:
+
+Bill: Electricity
+Amount: ৳2,500
+Due Date: 10 September
+
+System due date track করবে।
+
+Example:
+
+Today: September 3
+
+Electricity
+Due: September 10
+7 days remaining
+
+Later reminder system বলতে পারবে:
+
+🔔 Electricity bill is due in 2 days.
+
+Background logic
+Current Date
+     ↓
+Compare with Due Date
+     ↓
+Calculate remaining days
+     ↓
+If remaining days <= threshold
+     ↓
+Show reminder
+12. 🔄 Subscription Tracking
+
+User recurring subscriptions track করতে পারবে।
+
+Example:
+
+Netflix       ৳650/month
+Spotify       ৳300/month
+Internet      ৳1,000/month
+
+System calculate করতে পারবে:
+
+Monthly Subscription
+= 650 + 300 + 1000
+= ৳1,950
+
+এতে user বুঝতে পারবে recurring services-e monthly koto taka jacche.
+
+13. ❤️ Donation Tracking
+
+User donations আলাদাভাবে track করতে পারবে।
+
+Example:
+
+Donation
+Amount: ৳1,000
+Organization: XYZ
+Date: 01 September
+
+এতে financial history maintain থাকবে।
+
+14. 👶 Child Sub-account
+
+PocketBuddy-r একটু advanced feature.
+
+Main user তার child-এর জন্য sub-account maintain করতে পারবে।
+
+Example:
+
+Parent Account
+      │
+      ├── Child: Rafi
+      │      ├── Allowance
+      │      ├── Spending
+      │      └── Savings
+      │
+      └── Child: Sami
+             ├── Allowance
+             ├── Spending
+             └── Savings
+
+Parent দেখতে পারবে:
+
+Allowance given = ৳5,000
+Child spent      = ৳3,000
+Remaining        = ৳2,000
+
+এটা family financial management-er part hisebe kaj করবে।
+
+15. 🗄️ Database Logic
+
+Overall database relationship roughly:
+
+                USER
+                 │
+       ┌─────────┼──────────┐
+       │         │          │
+    INCOME    EXPENSE     BUDGET
+       │         │          │
+       │      CATEGORY      │
+       │                    │
+       ├────── GOAL ────────┤
+       │
+    SAVINGS
+       │
+      BILL
+       │
+ SUBSCRIPTION
+       │
+   DONATION
+       │
+ CHILD ACCOUNT
+
+সবচেয়ে important হচ্ছে:
+
+user_id
+
+প্রায় সব financial table-এর সাথে user_id থাকবে।
+
+Example:
+
+users
+-----------------
+user_id
+name
+email
+password
+
+Expense:
+
+expenses
+-----------------
+expense_id
+user_id
+category_id
+amount
+date
+description
+
+তাহলে system বুঝবে:
+
+এই expense কোন user-এর?
+
+16. 🔐 Background Logic — আসল ব্যাপার
+
+তুমি যখন বলছো "background logic", এই অংশটাই project presentation/viva-তে সবচেয়ে important.
+
+ধরি user একটা expense add করল:
+
+৳500 Food
+
+Frontend থেকে request যাবে:
+
+HTML Form
+    ↓
+PHP
+    ↓
+Validate Data
+    ↓
+MySQL
+    ↓
+expenses table
+
+তারপর dashboard:
+
+MySQL
+   ↓
+Fetch user's expenses
+   ↓
+SUM(amount)
+   ↓
+Calculate total expense
+   ↓
+Compare with income
+   ↓
+Calculate balance
+   ↓
+Display dashboard
+
+অর্থাৎ:
+
+USER ACTION
+     ↓
+FRONTEND
+     ↓
+BACKEND LOGIC
+     ↓
+DATABASE
+     ↓
+CALCULATION
+     ↓
+UPDATED UI
+17. 🔄 Full Example
+
+ধরি Sakib-এর:
+
+Income = ৳30,000
+
+সে expense add করল:
+
+Food        ৳5,000
+Transport   ৳2,000
+Shopping    ৳4,000
+Bills       ৳3,000
+
+System database-e সব save করবে।
+
+তারপর query/calculation:
+
+Total Expense
+= 5,000 + 2,000 + 4,000 + 3,000
+= 14,000
+
+Then:
+
+Balance
+= Income - Expense
+= 30,000 - 14,000
+= 16,000
+
+Dashboard দেখাবে:
+
+Income       ৳30,000
+Expense      ৳14,000
+Balance      ৳16,000
+
+আর category analysis:
+
+Food        ৳5,000
+Transport   ৳2,000
+Shopping    ৳4,000
+Bills       ৳3,000
+
+Chart.js এই data visualize করবে।
+
+18. 🏗️ Technical Architecture
+
+Tomader project-er planned architecture:
+
+                 USER
+                  │
+                  ▼
+            React / HTML
+            Bootstrap UI
+                  │
+                  ▼
+             Backend
+          PHP / Server Logic
+                  │
+                  ▼
+              MySQL
+                  │
+                  ▼
+        Financial Data Storage
+
+Tomar PocketBuddy-r current work অনুযায়ী PHP + MySQL + XAMPP important.
+
+Frontend side-e:
+
+HTML
+CSS
+Bootstrap
+JavaScript
+Chart.js
+
+Backend:
+
+PHP
+MySQL
+
+Server:
+
+XAMPP / Apache
+19. 🔑 Security Logic
+
+Basic security অবশ্যই থাকা উচিত।
+
+Password
+
+Plain text-e password store না করে ideally:
+
+password
+   ↓
+password_hash()
+   ↓
+hashed password
+   ↓
+database
+
+Login:
+
+Entered Password
+       ↓
+password_verify()
+       ↓
+Database hash
+       ↓
+Match?
+SQL Injection protection
+
+Raw SQL না দিয়ে prepared statement use করা ভালো:
+
+User input
+    ↓
+Prepared Statement
+    ↓
+Database
+20. 🧠 PocketBuddy-r Core Formula
+
+Project-er main calculationsগুলো basically:
+
+Balance
+Balance = Total Income - Total Expense
+Remaining Budget
+Remaining Budget
+= Budget - Actual Expense
+Goal Progress
+Progress %
+= Saved Amount / Target Amount × 100
+Goal Remaining
+Remaining
+= Target Amount - Saved Amount
+Subscription Cost
+Total Subscription Cost
+= SUM(all active subscriptions)
+Budget Warning
+if Expense > Budget
+      ↓
+   Warning
+Bill Reminder
+Days Remaining
+= Due Date - Current Date
+
+if Days Remaining <= threshold
+      ↓
+   Reminder
+21. 🔁 Complete User Flow
+
+Tomader project-ta overall এভাবে কাজ করবে:
+
+                 START
+                   │
+                   ▼
+              Landing Page
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+       Register            Login
+          │                 │
+          └────────┬────────┘
+                   ▼
+               Dashboard
+                   │
+       ┌───────────┼────────────┐
+       ▼           ▼            ▼
+     Income      Expense      Budget
+       │           │            │
+       └───────────┼────────────┘
+                   ▼
+             Financial Data
+                   │
+       ┌───────────┼─────────────┐
+       ▼           ▼             ▼
+     Goals       Bills      Subscriptions
+       │           │             │
+       ▼           ▼             ▼
+    Savings     Reminder       Tracking
+       │
+       ▼
+     Reports
+       │
+       ▼
+     Charts
+       │
+       ▼
+    Better Financial Decision
+22. 🎓 Project-er Main Objective
+
+সবকিছু মিলিয়ে PocketBuddy-r objective এক লাইনে:
+
+PocketBuddy is a personal finance management system that helps users record, organize, analyze, and plan their financial activities through expense tracking, budgeting, savings goals, bill reminders, subscription tracking, donation management, and child sub-account management.
+
+আর background logic এক লাইনে:
+
+The system stores user-specific financial transactions in a relational database, retrieves them through backend logic, performs calculations such as income, expense, balance, budget utilization and savings progress, and presents the results through an interactive dashboard.
+
+এটাই তোমার project-এর core backbone। UI সুন্দর হওয়া important, কিন্তু viva/project defense-এ যদি জিজ্ঞেস করে “PocketBuddy actually works how?”, তাহলে মূল উত্তর হবে:
+
+User → Input → Backend Validation → Database → Calculation/Business Logic → Dashboard/Report → Decision Support.
